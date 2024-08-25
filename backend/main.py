@@ -1,13 +1,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from typing import List, Optional
-
-app = FastAPI()
-
-trips = {}
-accommodations = {}
-expenses = {}
-
+from typing import List, Dict
 
 class Accommodation(BaseModel):
     name: str
@@ -27,9 +20,16 @@ class Expense(BaseModel):
     amount: float
     date: str
 
+app = FastAPI()
+
+trips: Dict[int, Trip] = {}
+accommodations: Dict[int, Accommodation] = {}
+expenses: Dict[int, Expense] = {}
+
+
 @app.post("/accomodation")
 async def create_accomodation(accommodation: Accommodation):
-    accommodation_id = len(accommodation) + 1
+    accommodation_id = len(accommodations) + 1
     accommodations[accommodation_id] = accommodation
     return accommodation
 
