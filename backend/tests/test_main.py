@@ -18,3 +18,8 @@ def test_create_trip():
     response = client.post("/trip", json={"name": "Paris Trip", "destinations": ["Paris"], "accommodations": [{"name": "Hotel", "location": "Paris", "check_in": "2021-10-01", "check_out": "2021-10-05", "cost": 100.0}], "start_date": "2021-10-01", "end_date": "2021-10-05"})
     assert response.status_code == 200
     assert response.json() == {"name": "Paris Trip", "destinations": ["Paris"], "accommodations": [{"name": "Hotel", "location": "Paris", "check_in": "2021-10-01", "check_out": "2021-10-05", "cost": 100.0}], "start_date": "2021-10-01", "end_date": "2021-10-05"}
+
+def test_create_trip_multiple_destinations():
+    response = client.post("/trip", json={"name": "Euro Trip", "destinations": ["Paris", "London"], "accommodations": [{"name": "Hotel", "location": "Paris", "check_in": "2021-10-01", "check_out": "2021-10-05", "cost": 100.0}], "start_date": "2021-10-01", "end_date": "2021-10-05"})
+    assert response.status_code == 200
+    assert response.json() == {"name": "Euro Trip", "destinations": ["Paris", "London"], "accommodations": [{"name": "Hotel", "location": "Paris", "check_in": "2021-10-01", "check_out": "2021-10-05", "cost": 100.0}], "start_date": "2021-10-01", "end_date": "2021-10-05"}
