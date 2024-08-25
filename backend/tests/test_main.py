@@ -37,23 +37,26 @@ def test_get_accommodation():
         accommodation_id = accommodation_data["id"]
         response = client.get(f"/accommodation/{accommodation_id}")
         assert response.status_code == 200
-        assert response.json() == accommodation_data.copy()
+        assert response.json() == accommodation_data
 
-# def test_get_trip():
-#     trip_data = {
-#         "id": 1,
-#         "name": "Paris Trip",
-#         "destinations": ["Paris"],
-#         "accommodations": [{
-#             "name": "Hotel",
-#             "location": "Paris",
-#             "check_in": "2021-10-01",
-#             "check_out": "2021-10-05",
-#             "cost": 100.0
-#         }],
-#         "start_date": "2021-10-01",
-#         "end_date": "2021-10-05"
-#     }
-#     trip_id = post_and_get_id("/trip", trip_data)
-#     assert trip_id is not None, "Trip ID not found in the response"
-#     get_and_assert(f"/trip/{trip_id}", trip_data)
+def test_get_trip():
+    trip_data = {
+        "id": 1,
+        "name": "Paris Trip",
+        "destinations": ["Paris"],
+        "accommodations": [{
+            "id": 1,
+            "name": "Hotel",
+            "location": "Paris",
+            "check_in": "2021-10-01",
+            "check_out": "2021-10-05",
+            "cost": 100.0
+        }],
+        "start_date": "2021-10-01",
+        "end_date": "2021-10-05"
+    }
+    response = client.post("/trip", json=trip_data)
+    trip_id = trip_data["id"]
+    response = client.get(f"/trip/{trip_id}")
+    assert response.status_code == 200
+    assert response.json() == trip_data
